@@ -32,6 +32,7 @@ const RangeDatePicker = ({
   hideDialogAfterSelectEndDate,
   isOpen,
   onCloseCalendar,
+  children,
 }) => {
   const [complsOpen, setComplsOpen] = useState(false);
   const containerRef = useRef(null);
@@ -43,6 +44,25 @@ const RangeDatePicker = ({
   const [hoverDate, setHoverDate] = useState();
   const [isFirstTime, setIsFirstTime] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  const defaultChild = (
+    <DateInputGroup
+      handleClickDateInput={handleClickDateInput}
+      showCalendarIcon
+      fromDate={fromDate}
+      toDate={toDate}
+      minDate={minDate}
+      maxDate={maxDate}
+      handleChangeDate={handleChangeDate}
+      startDatePlaceholder={startDatePlaceholder}
+      endDatePlaceholder={endDatePlaceholder}
+      dateFormat={dateFormat}
+      onFocus={onDateInputFocus}
+      nonFocusable={complsOpen}
+      dateInputSeperator={dateInputSeperator}
+      inputFocus={inputFocus}
+    />
+  );
 
   function handleResize() {
     if (typeof window !== 'undefined' && window.innerWidth < 768) {
@@ -217,26 +237,10 @@ const RangeDatePicker = ({
         })}
         ref={containerRef}
       >
-        <DateInputGroup
-          handleClickDateInput={handleClickDateInput}
-          showCalendarIcon
-          fromDate={fromDate}
-          toDate={toDate}
-          minDate={minDate}
-          maxDate={maxDate}
-          handleChangeDate={handleChangeDate}
-          startDatePlaceholder={startDatePlaceholder}
-          endDatePlaceholder={endDatePlaceholder}
-          dateFormat={dateFormat}
-          onFocus={onDateInputFocus}
-          nonFocusable={complsOpen}
-          dateInputSeperator={dateInputSeperator}
-          inputFocus={inputFocus}
-        />
-
+        {children(setComplsOpen) ?? defaultChild}
         <DialogWrapper isMobile={isMobile}>
           <Dialog
-            complsOpen={complsOpen}
+            complsOpen={setComplsOpen}
             toggleDialog={toggleDialog}
             handleClickDateInput={handleClickDateInput}
             inputFocus={inputFocus}

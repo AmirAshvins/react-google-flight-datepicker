@@ -47,7 +47,6 @@ export function debounce(func, wait) {
   // This is the function that is returned and will be executed many times
   // We spread (...args) to capture any number of parameters we want to pass
   return function executedFunction(...args) {
-
     // The callback function to be executed after
     // the debounce time has elapsed
     const later = () => {
